@@ -52,6 +52,7 @@ if(File::exists(storage_path()."/setup")) {
         Route::any("/settings/export", ["as" => "user/settings/export", "uses" => "UserController@export"]);
         Route::any("/settings/import", ["as" => "user/settings/import", "uses" => "UserController@import"]);
         Route::get('/', ["as" => "/", "uses" => "LibraryController@show"]);
+        Route::any("/settings/nextTourStep/{step?}", ["as" => "user/settings/nextTourStep", "uses" => "UserController@nextTourStep"]);
     
         //Administrators
         Route::group(['prefix' => 'admin', 'before' => ['admin']], function () {
@@ -93,7 +94,7 @@ if(File::exists(storage_path()."/setup")) {
         Route::get('/tagged/{num}', 'ApiNotesController@tagged');
         Route::get('/search/{query}', 'ApiNotesController@search');
     });
-    
+
     // Route::any('/api/v1/notebooks/(:num?)', array('as' => 'api.v1.notebooks', 'uses' => 'ApiNotebooksController@index'));
     // Route::any('/api/v1/notes/(:num?)', array('as' => 'api.v1.notes', 'uses' => 'api.v1.notes@index'));
 }

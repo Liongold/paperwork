@@ -52,7 +52,9 @@ var paths = {
         'app/js/mathquill.js',
         'app/js/bower_components/retinajs/dist/retina.js',
         'app/js/bower_components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js',
-        //'public/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js'
+        //'public/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js',
+        'app/js/bower_components/tether/dist/js/tether.js',
+        'app/js/bower_components/tether-shepherd/dist/js/shepherd.js'
     ],
     ie9compat: [
         'app/js/bower_components/html5shiv/dist/html5shiv.js',
@@ -61,6 +63,9 @@ var paths = {
     ],
     ie11compat: [
         'app/js/bower_components/bootstrap3-ie10-viewport-bug-workaround/ie10-viewport-bug-workaround.js'
+    ],
+    tour: [
+        'app/js/tour.js'
     ],
     output: {
         js: 'public/js',
@@ -97,7 +102,8 @@ gulp.task('compileLessPaperworkThemeV1', function () {
 gulp.task('concatLibCSS', function () {
     gulp.src([
         'public/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css',
-        'app/js/bower_components/angular-loading-bar/src/loading-bar.css'
+        'app/js/bower_components/angular-loading-bar/src/loading-bar.css',
+        'app/js/bower_components/tether-shepherd/dist/css/shepherd-theme-arrows.css'
     ])
         .pipe(concat('libs.css'))
         .pipe(gulp.dest(paths.output.css));
@@ -204,6 +210,14 @@ gulp.task('compileJsLtIe11Compat', function () {
         .pipe(livereload());
 });
 
+gulp.task('compileJsTour', function () {
+    gulp
+        .src(paths.tour)
+        .pipe(concat('tour.min.js'))
+        .pipe(gulp.dest(paths.output.js))
+        .pipe(livereload());
+});
+
 gulp.task('lint', function () {
     gulp
         .src(paths.paperwork)
@@ -228,7 +242,7 @@ gulp.task('bower-update', function () {
 });
 
 gulp.task('less', ['compileLessBootstrapTheme', 'compileLessPaperworkThemeV1', 'compileLessFreqselector', 'compileLessTypeahead']);
-gulp.task('js', ['compileJsBootstrap', 'compileJsPaperwork', 'compileJsPaperworkNative', 'compileJsAngular', 'compileJsJquery', 'compileJsTagsinput', 'compileJsLibraries', 'compileJsLtIe9Compat', 'compileJsLtIe11Compat']);
+gulp.task('js', ['compileJsBootstrap', 'compileJsPaperwork', 'compileJsPaperworkNative', 'compileJsAngular', 'compileJsJquery', 'compileJsTagsinput', 'compileJsLibraries', 'compileJsLtIe9Compat', 'compileJsLtIe11Compat', 'compileJsTour']);
 
 gulp.task('default', ['less', 'lint', 'js', 'concatLibCSS']);
 gulp.task('prod', ['default', 'minifyJs']);

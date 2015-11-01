@@ -495,4 +495,17 @@ class UserController extends BaseController
 
         return Response::make(rtrim($file_content, "\r\n"), 200, $headers);
     }
+    
+    public function nextTourStep($step = null) {
+        $settings = Setting::where('user_id', '=', Auth::user()->id)->first();
+        if(!$step) {
+            $nextStep = $step;
+        }else{
+            $nextStep = $settings->tour_current_step + 1;
+        }
+        $settings->tour_current_step = $nextStep;
+        if($settings->save()) {
+            return $settings->tour_current_step;
+        }
+    }
 }

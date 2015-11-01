@@ -20,6 +20,28 @@
 
 </head>
 <body ng-app="paperworkNotes">
+@if (Setting::where('user_id', '=', Auth::user()->id)->first()->tour_current_step == 0)
+<div class="modal fade" tabindex="-1" role="dialog" id="tour_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Welcome to Paperwork!</h4>
+            </div>
+            <div class="modal-body">
+                <p>Welcome to Paperwork, your free and open source note taking application. In order to get up to speed, you can follow a tour around the Paperwork UI. Do you want to start it now?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="start_tour">Yes, let's start!</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No, not now</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="start_tour_cancel">No and don't show this to me again.</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 <div ng-controller="ConstructorController"></div>
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -87,6 +109,11 @@
 
 [[-- HTML::script('js/bootstrap-editable.min.js') --]]
 [[-- HTML::script('//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js') --]]
+
+<script type="text/javscript">
+var currentStep = [[ Setting::where('user_id', '=', Auth::user()->id)->first()->tour_current_step ]];
+</script>
+[[ HTML::script('js/tour.min.js') ]]
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
